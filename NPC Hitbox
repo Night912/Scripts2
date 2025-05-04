@@ -1,0 +1,124 @@
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+ScreenGui.Name = "Cmetana_CC"
+
+local Frame = Instance.new("Frame", ScreenGui)
+Frame.Size = UDim2.new(0, 260, 0, 110)
+Frame.Position = UDim2.new(0, 30, 0, 100)
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.BorderSizePixel = 0
+Frame.Active = true
+Frame.Draggable = true
+Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 10)
+
+local Header = Instance.new("Frame", Frame)
+Header.Size = UDim2.new(1, 0, 0, 30)
+Header.BackgroundColor3 = Color3.fromRGB(255, 205, 0)
+Header.BorderSizePixel = 0
+Instance.new("UICorner", Header).CornerRadius = UDim.new(0, 10)
+
+local Title = Instance.new("TextLabel", Header)
+Title.Size = UDim2.new(1, 0, 1, 0)
+Title.Text = "💸 Cmetana_CC 💸"
+Title.TextColor3 = Color3.fromRGB(0, 0, 0)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 14
+Title.BackgroundTransparency = 1
+
+local Body = Instance.new("Frame", Frame)
+Body.Position = UDim2.new(0, 0, 0, 30)
+Body.Size = UDim2.new(1, 0, 1, -30)
+Body.BackgroundTransparency = 1
+
+local function makeButton(parent, text, posY)
+ local btn = Instance.new("TextButton", parent)
+ btn.Size = UDim2.new(0, 230, 0, 30)
+ btn.Position = UDim2.new(0, 15, 0, posY)
+ btn.Text = text
+ btn.BackgroundColor3 = Color3.fromRGB(255, 205, 0)
+ btn.TextColor3 = Color3.fromRGB(0, 0, 0)
+ btn.Font = Enum.Font.GothamBold
+ btn.TextSize = 13
+ Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 5)
+ return btn
+end
+
+local ToggleBodyBtn = makeButton(Body, "🧬 Включить", 5)
+local ToggleHeadBtn = makeButton(Body, "🧬 Включить", 45)
+
+
+local monitoringBody = false
+local monitoringHead = false
+local modified = {}
+
+local function expandBody(npc)
+ if not npc:FindFirstChild("HumanoidRootPart") then return end
+ if game.Players:GetPlayerFromCharacter(npc) then return end
+ if modified[npc] and modified[npc].Body then return end
+
+ local root = npc.HumanoidRootPart
+ root.Size = Vector3.new(15, 15, 15)
+ root.Transparency = 0.92
+ root.Material = Enum.Material.ForceField
+ root.Color = Color3.fromRGB(255, 0, 0)
+ root.CanCollide = false
+
+ modified[npc] = modified[npc] or {}
+ modified[npc].Body = true
+end
+
+local function expandHead(npc)
+ if not npc:FindFirstChild("Head") then return end
+ if game.Players:GetPlayerFromCharacter(npc) then return end
+ if modified[npc] and modified[npc].Head then return end
+
+ local head = npc.Head
+ head.Size = Vector3.new(5, 5, 5)
+ head.Transparency = 0.9
+ head.Material = Enum.Material.ForceField
+ head.Color = Color3.fromRGB(255, 255, 0)
+ head.CanCollide = false
+
+ for _, part in ipairs(npc:GetChildren()) do
+  if part:IsA("BasePart") then
+   part.CanCollide = false
+   part.Anchored = false
+  end
+ end
+
+ modified[npc] = modified[npc] or {}
+ modified[npc].Head = true
+end
+
+local function monitorBody()
+ while monitoringBody do
+  for _, model in ipairs(workspace:GetDescendants()) do
+   if model:IsA("Model") then
+    expandBody(model)
+   end
+  end
+  wait(1)
+ end
+end
+
+local function monitorHead()
+ while monitoringHead do
+  for _, model in ipairs(workspace:GetDescendants()) do
+   if model:IsA("Model") then
+    expandHead(model)
+   end
+  end
+  wait(1)
+ end
+end
+
+ToggleBodyBtn.MouseButton1Click:Connect(function()
+ monitoringBody = not monitoringBody
+ ToggleBodyBtn.Text = monitoringBody and "❌ Выключить" or "🧬 Включить"
+ if monitoringBody then coroutine.wrap(monitorBody)() end
+end)
+
+ToggleHeadBtn.MouseButton1Click:Connect(function()
+ monitoringHead = not monitoringHead
+ ToggleHeadBtn.Text = monitoringHead and "❌ Выключить" or "🧬 Включить"
+ if monitoringHead then coroutine.wrap(monitorHead)() end
+end) 
