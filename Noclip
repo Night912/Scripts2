@@ -16,8 +16,8 @@ Noclip.Parent = game.CoreGui
 
 BG.Name = "BG"
 BG.Parent = Noclip
-BG.BackgroundColor3 = Color3.new(0.0980321, 0.0980321, 0.09803921)
-BG.BorderColor3 = Color3.new(0.0588221, 0.0588221, 0.0588221)
+BG.BackgroundColor3 = Color3.new(0.0380321, 0.0380321, 0.03803921)
+BG.BorderColor3 = Color3.new(0.0388221, 0.0388221, 0.0388221)
 BG.BorderSizePixel = 2
 BG.Position = UDim2.new(0.149479166, 0, 0.82087779, 0)
 BG.Size = UDim2.new(0, 210, 0, 127)
