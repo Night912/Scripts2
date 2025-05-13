@@ -156,7 +156,7 @@ end)
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
 
 OrionLib:MakeNotification({
-	Name = "GunFight Arena (cmetanik)",
+	Name = "GunFight Arena (эу сметана сс)",
 	Content = "",
 	Image = "rbxassetid://4483345998",
 	Time = 5
