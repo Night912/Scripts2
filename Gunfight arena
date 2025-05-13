@@ -156,7 +156,7 @@ end)
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
 
 OrionLib:MakeNotification({
-	Name = "GunFight Arena",
+	Name = "GunFight Arena (cmetanik)",
 	Content = "",
 	Image = "rbxassetid://4483345998",
 	Time = 5
@@ -182,7 +182,7 @@ local aimsection = aimtab:AddSection({
 
 
 aimsection:AddToggle({
-	Name = "Silent Aim (credit to dementia)",
+	Name = "Silent Aim (работает рил??)",
 	Default = false,
 	Callback = function(Value)
 		silentaim = Value
@@ -313,7 +313,7 @@ local SettingsSection = SettingsTab:AddSection({
 })
 
 SettingsSection:AddButton({
-	Name = "Destroy UI",
+	Name = "Destroy UI иуу удали",
 	Callback = function()
         OrionLib:Destroy()
   	end    
